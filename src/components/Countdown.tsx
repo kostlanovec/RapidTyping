@@ -12,7 +12,7 @@ const CountDown: React.FC<CountDownProps> = ({onCountdownEnd}) =>{
     useEffect(() => {
         if(count > 0)
         {
-            // odečte 1 po minutě
+            // odečte 1 po sekundě
             setTimeout(() => setCount(count - 1), 1000);
         }
         else
