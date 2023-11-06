@@ -3,6 +3,7 @@ import './App.css'
 import Countdown from './components/Countdown';
 import Typing from './components/Typing';
 import Result from './components/Result';
+import data from './Data.json';
 
 function App() {
   const [showCountdown, setShowCountdown] = useState(false);
@@ -11,6 +12,7 @@ function App() {
   const [numberMistakes, setNumberMistakes] = useState<number>(0);
   const [typingSpeed, setTypingSpeed] = useState<number>(0);
   const [time, setTime] = useState<number>(0);
+  const [mode, setMode] = useState<string>("test"); // nastavení defaultně na test i z toho důvodu, že je první
 
   const handleButtonClick = () =>{
     setShowCountdown(true);
@@ -34,21 +36,28 @@ function App() {
    setResult(false);
   }
 
-  console.log(showCountdown);
-  console.log(gameStart);
-  console.log(numberMistakes);
-  console.log(typingSpeed);
-  console.log(time);
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedMode = event.target.value;
+    setMode(selectedMode);
+  };
+
   return (
     <div>
     {!showCountdown && !gameStart && (
   <div>
-    <h1>Vítej do aplikace Rapid Typing</h1>
+    <h1>Vítej v aplikaci Rapid Typing</h1>
+    <select onChange={handleSelectChange}>
+        {data.optionsToType.map((option, index) => (
+          <option key={index} value={option.mode}>
+            {option.mode}
+          </option>
+        ))}
+      </select>
     <button onClick={handleButtonClick}>Start Countdown</button>
   </div>
 )}
         {showCountdown && <Countdown onCountdownEnd={handleButtondownEnd} />}
-        {gameStart && !result && <Typing handleButtonResult={handleButtonResult} />}
+        {gameStart && !result && <Typing handleButtonResult={handleButtonResult} mode={mode} />}
         {result && (
         <Result
           typingSpeed={typingSpeed}

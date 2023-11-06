@@ -1,0 +1,11 @@
+.wordsInputs{
+    border: none;
+  cursor: default;
+  display: block;
+  margin: 0 auto;
+  opacity: 0;
+  outline: none;
+  padding: 0;
+  resize: none;
+  z-index: -1;
+}

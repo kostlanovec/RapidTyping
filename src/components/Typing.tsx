@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useRef} from 'react'
+import data from '../Data.json'
 
 type TypingProps = {
   handleButtonResult: (mistakes: number, speed: number, time: number) => void;
+  mode:string;
 };
 
-const Typing: React.FC<TypingProps> = ({ handleButtonResult }) => {
-    const textToTyp = 'Tohle je text, který musíš napsat velice správně a pokud ne, tak ti rozbiju hubu.'
+const Typing: React.FC<TypingProps> = ({ handleButtonResult, mode }) => {
+  const textToTyp = data.optionsToType.find((option) => option.mode === mode)?.text || '';
 
     const [typedText, setTypedText] = useState<string>('');
     const [mistakes, setMistakes] = useState<number>(0);
@@ -13,6 +15,14 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult }) => {
 
     // Ref který slouží na to, že člověk může okamžitě psát bez nutnosti na to kliknout. 
     const inputRef = useRef<HTMLInputElement>(null);
+
+      if (textToTyp.length === typedText.length) {
+        setTimeout(() => {
+          const currentTime = Date.now(); //počítano i s prodlevou
+          handleButtonResult(mistakes,calculateTypingSpeed(currentTime, startTime, textToTyp.length),currentTime - startTime
+          );
+        });
+      };
 
     // Funkce, která reaguje na změnu hodnoty v input
     const handleInputChange = () => {
@@ -57,24 +67,12 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult }) => {
           }
         });
       };
-
-      
-      /* problém je asynchronní operace javascriptu a taky nevím, jestli useEffect na to, že je konec hry je vhodný*/
-      useEffect(() => {
-        if (textToTyp.length === typedText.length) {
-          setTimeout(() => {
-            const currentTime = Date.now() - 50; //počítano i s prodlevou
-            handleButtonResult(mistakes,calculateTypingSpeed(currentTime, startTime, textToTyp.length),currentTime - startTime
-            );
-          }, 50); // nevím, prostě počkáme 50 milisekund
-        }
-      }, [typedText, textToTyp, mistakes, startTime, handleButtonResult]);
     
       return (
         <div>
           <h2>A teď piš negře</h2>
           <p>{renderTextWithHighlights()}</p>
-          <input ref={inputRef} type="text" value={typedText} onChange={handleInputChange} />
+          <input className='wordsInputs' ref={inputRef} type="text" value={typedText} onChange={handleInputChange}  autoFocus/>
           <p>Mistakes: {mistakes}</p>
         </div>
       );
