@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from 'react'
+import style from './Countdown.module.css';
 
 // Definujme si, že existuje nějaká funkce
 type CountDownProps = {
@@ -22,7 +23,7 @@ const CountDown: React.FC<CountDownProps> = ({onCountdownEnd}) =>{
     }, [count, onCountdownEnd]);
 
     return (
-        <div className="countdown">{count}</div>
+        <p className={`${style['countdown']}`}>{count}</p>
     );
 }
 

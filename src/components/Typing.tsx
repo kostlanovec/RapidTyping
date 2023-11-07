@@ -18,7 +18,7 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult, mode }) => {
 
       if (textToTyp.length === typedText.length) {
         setTimeout(() => {
-          const currentTime = Date.now(); //počítano i s prodlevou
+          const currentTime = Date.now();
           handleButtonResult(mistakes,calculateTypingSpeed(currentTime, startTime, textToTyp.length),currentTime - startTime
           );
         });
@@ -40,21 +40,17 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult, mode }) => {
       }
     };
   
-    
-
       const calculateTypingSpeed = (endTime: number, startTime: number, textLength: number) => {
         const timeInMinutes = (endTime - startTime) / 60000;
         const charactersPerMinute = textLength / timeInMinutes;
         return charactersPerMinute;
       };
 
-      
       useEffect(() => {
         if (startTime === 0) {
           setStartTime(Date.now());
         }
       }, [startTime]);
-
 
       const renderTextWithHighlights = () => {
         return textToTyp.split('').map((char, index) => {
@@ -75,9 +71,7 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult, mode }) => {
           <input className='wordsInputs' ref={inputRef} type="text" value={typedText} onChange={handleInputChange}  autoFocus/>
           <p>Mistakes: {mistakes}</p>
         </div>
-      );
-
-      
+      );  
 }
 
 export default Typing;

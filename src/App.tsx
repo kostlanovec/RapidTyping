@@ -19,7 +19,7 @@ function App() {
   }
 
   const handleButtondownEnd = () =>{
-    setShowCountdown(false)
+    setShowCountdown(false);
     setGameStart(true);
     }
 
