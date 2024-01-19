@@ -1,8 +1,20 @@
 {
-    "optionsToType" :[
+    "TextToTyping" :[
         {"mode": "test", "text" : "Vítej v aplikaci rapid Racing je to aplikace, ve které se snažím zlepšit můj skill skrz react"},
         {"mode": "fj", "text" : "ff ff jj jj fj fj jf jf"},
         {"mode": "czechtext", "text" : "Žhavý Johan toužil po pokladu. Pomohl mu vtipný trpaslík. Společně překonali pasti a draka. Nakonec našli poklad. Johan se odvděčil trpaslíkovi. Oslavili spolu. Konec."},
         {"mode": "hardasfuck", "text" : "Dnes je *6. listopadu 2023 a teplota dosáhla 18 °C. Během (posledního týdne) spadlo na výrobní lince 35 prázdných krabic, což způsobilo prodlevu v celém procesu. Johnův nový projekt dosáhl 120% očekávaných výsledků, což vyvolalo nadšení ve firmě. Během schůzky v 10:30 hod. byl zahájen nový program školení zaměstnanců. Během oběda si Sarah objednala 1/2 kila masa a 3/4 kila čerstvé zeleniny. Na konci dne bylo zaznamenáno 25% nárůstu produktivity oproti minulému týdnu. Tyto události byly sledovány; účastníci byli povzbuzováni k větší aktivitě. Mezi úkoly, které bylo třeba dokončit, patřilo přepracování projektu školení zaměstnanců a upravení plánu akcí do [následujícího měsíce]. Řada zaměstnanců se angažovala ve zlepšování školního prostředí, a to včetně vytvoření nových vzdělávacích materiálů s diakritikou, jako jsou písmena ř a š."}
+    ],
+    "ModeTimeTyping":[
+        {"time": 0},
+        {"time": 30},
+        {"time": 60},
+        {"time": 5}
+    ],
+    "ModePlay":[
+        {"mode":"normal"},
+        {"mode": "fastlook"},
+        {"mode": "onemistake"},
+        {"mode": "bettertyping"}
     ]
 }

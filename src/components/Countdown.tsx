@@ -20,7 +20,7 @@ const CountDown: React.FC<CountDownProps> = ({onCountdownEnd}) =>{
         {   // odpočet skončil, takže je konec
             onCountdownEnd();
         }
-    }, [count, onCountdownEnd]);
+    }, [count]);
 
     return (
         <p className={`${style['countdown']}`}>{count}</p>

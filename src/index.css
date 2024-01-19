@@ -1,0 +1,74 @@
+:root{
+    --backgroundcolor: #0D253D;
+    --texttowrite: #efeffb88;
+    --textcolornormal: #efeffb;
+    --yellow: yellow;
+  }
+
+body{
+  background-color: var(--backgroundcolor);
+  color: var(--textcolornormal);
+  padding: 0;
+  margin: 1em;
+  font-family: "Roboto", sans-serif;
+  user-select: none;
+}
+  
+.texttowrite{
+  font-size: 3em;
+  color: var(--texttowrite);
+  max-width: 20em;
+}
+.container__texttowrite{
+  display: flex;
+  justify-content: center;
+}
+
+.wordsInputs{
+  border: none;
+  cursor: default;
+  display: block;
+  margin: 0 auto;
+  opacity: 0;
+  outline: none;
+  padding: 0;
+  resize: none;
+  z-index: -1;
+  font-size: 0;
+}
+
+.selectOption{
+  background-color: #0D253D;
+  border: none;
+  color: var(--yellow);
+  text-decoration: none;
+}
+
+.timetowrite{
+  color: var(--yellow);
+}
+
+@keyframes caretFlashSmooth {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .currentPosition {
+    background-color: yellow;
+  }
+  
+  .caret {
+    font-size: 1.5rem;
+    animation: caretFlashSmooth 1s infinite;
+    display: inline-block;
+    width: 1px;
+    height: 1.5rem;
+    background-color: black;
+  }  
