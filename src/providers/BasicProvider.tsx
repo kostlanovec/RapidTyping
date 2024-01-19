@@ -4,7 +4,7 @@ type BasicContext = {jmenohrace: string, toggleJmeno: (jmeno: string) => void}
 
 export const BasicContext = createContext<BasicContext>(
     {
-        jmenohrace: "Chlapec", toggleJmeno(jmeno: string) {},
+        jmenohrace: "", toggleJmeno() {},
     }
 )
 

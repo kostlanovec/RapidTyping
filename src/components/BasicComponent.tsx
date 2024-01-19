@@ -17,12 +17,12 @@ export const BasicComponent = () =>{
         <div>
          <div>
       <label>
-        Enter your name:
+        Pošli své jméno
         <input type="text" ref={inputJmenoRef} />
       </label>
-      <button onClick={nastaveniJmena}>Submit</button>
+      <button onClick={nastaveniJmena}>Poslat</button>
 
-      {jmenohrace && <p>Hello, {jmenohrace}!</p>}
+      {jmenohrace && <p>Zdravím, {jmenohrace}!</p>}
     </div>
         </div>
     )
