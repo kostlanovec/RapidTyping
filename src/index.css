@@ -72,3 +72,11 @@ body{
     height: 1.5rem;
     background-color: black;
   }  
+
+  .countdown{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: red;
+  }

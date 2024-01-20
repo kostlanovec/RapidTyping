@@ -1,22 +1,27 @@
-import { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
 import Countdown from './components/Countdown';
 import Typing from './components/Typing';
 import Result from './components/Result';
 import { BasicComponent } from './components/BasicComponent';
 import { BasicContext } from './providers/BasicProvider';
 import ChoiceComponent from './components/ChoiceComponent';
+import StatisticProvider, { StatisticContext } from './providers/StatisticProvider';
 
 function App() {
-  const [showCountdown, setShowCountdown] = useState(false);
-  const [gameStart, setGameStart] = useState(false);
-  const [result, setResult] = useState(false);
-  const [numberMistakes, setNumberMistakes] = useState<number>(0);
-  const [typingSpeed, setTypingSpeed] = useState<number>(0);
-  const [time, setTime] = useState<number>(0);
-  const [text, setText] = useState<string>("test");
-  const [mode, setMode] = useState<string>("normal");
+  const { jmenohrace } = useContext(BasicContext);
   const [customSettings, setCustomSettings] = useState<boolean>(false);
-  const {jmenohrace} = useContext(BasicContext);
+  const [result, setResult] = useState<boolean>(false);
+  const [gameStart, setGameStart] = useState<boolean>(false);
+  const [showCountdown, setShowCountdown] = useState<boolean>(false);
+  const [text, setText] = useState<string>("test");
+  const {
+    time,
+    setTime,
+    setMode,
+    setNumberMistakes,
+    setTypingSpeed,
+    mode,
+  } = useContext(StatisticContext);
 
   const handleButtonClick = () =>{
     setShowCountdown(true);
@@ -42,7 +47,6 @@ function App() {
   }
 
   const customSettingButtonClick = () =>{
-    console.log("bylo kliknuto na custom settings");
     if (customSettings == true){
       setCustomSettings(false)
     }
@@ -51,8 +55,6 @@ function App() {
     }
   }
 
-  // to-do super by byl multiplayer, byl by závod, kdo by závod udělal rychleji, takže by byla potřeba udělt nějaká roomka, kde organizátor bude říkat, co by tam mohlo být
-  // to-do tohle by se dalo udělat obecně, protože se využívá stejných principu
   const handleSelectChangeText = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedMode = event.target.value;
     setText(selectedMode);
@@ -70,37 +72,32 @@ function App() {
 
   return (
     <div>
-      {!jmenohrace &&(
-        <BasicComponent />
-      )}
+      {!jmenohrace && <BasicComponent />}
+  
       {jmenohrace && (
         <div>
-         {!showCountdown && !gameStart && (
-  <ChoiceComponent
-  handleSelectChangeText={handleSelectChangeText}
-  handleSelectChangeTime={handleSelectChangeTime}
-  handleSelectChangeMode={handleSelectChangeMode}
-  customSettings={customSettings}
-  customSettingButtonClick={customSettingButtonClick}
-  handleButtonClick={handleButtonClick}
-/>
-        )}
-                {showCountdown && <Countdown onCountdownEnd={handleButtondownEnd} />}
-                {gameStart && !result && <Typing handleButtonResult={handleButtonResult} text={text} time={time} mode={mode} />}
-                {result && (
-                <Result
-                  typingSpeed={typingSpeed}
-                  numberMistakes={numberMistakes}
-                  time={time}
-                  toMainMenu={toMainMenu}
-                />
-              )}
-              </div>
-      )}
-   
+          {!showCountdown && !gameStart && (
+            <ChoiceComponent
+              handleSelectChangeText={handleSelectChangeText}
+              handleSelectChangeTime={handleSelectChangeTime}
+              handleSelectChangeMode={handleSelectChangeMode}
+              customSettings={customSettings}
+              customSettingButtonClick={customSettingButtonClick}
+              handleButtonClick={handleButtonClick}
+            />
+          )}
+          {showCountdown && <Countdown onCountdownEnd={handleButtondownEnd} />}
+          {gameStart && !result && <Typing handleButtonResult={handleButtonResult} text={text} time={time} mode={mode} />}
+          {result && (
+  <Result
+    toMainMenu={toMainMenu}
+  />
+)}
 
-  </div>
-  )
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
