@@ -6,11 +6,11 @@ export type CustomSettingsProps = {
   onCustomSettingsEnd: () => void;
 };
 
-const ModalWindowCustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSettingsEnd}) => {
+const CustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSettingsEnd}) => {
     const {setMode, setTypingText, typingText, setTime, mode, time} = useContext(PlayingContext);
     const [randomTextLength, setRandomTextLength] = useState<number>(50);
 
-  const handleSaveButtonClick = () => {
+  const handleBackMainMenu = () => {
     onCustomSettingsEnd();
   };
 
@@ -19,7 +19,8 @@ const ModalWindowCustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSett
   };
 
   const generateRandomText = (length: number): string => {
-    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    // to by se kdyžtak mohlo generovat z ansi tabulky
+    const characters = 'abcdefghijklmnopqrstuvwxyz áčďéěíňóřšťúůýž!@#$%^&*()_+-=[]{}|;:,.<>?/1234567890 ';
     let randomText = '';
   
     for (let i = 0; i < length; i++) {
@@ -57,9 +58,9 @@ const ModalWindowCustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSett
         onChange={(e) => setRandomTextLength(Number(e.target.value))}
       />
       <button onClick={handleGenerateRandomText}>Generovat náhodný text</button>
-      <button onClick={handleSaveButtonClick}>Uložit</button>
+      <button onClick={handleBackMainMenu}>Zpět do menu</button>
     </div>
   );
 };
 
-export default ModalWindowCustomSettings;
+export default CustomSettings;

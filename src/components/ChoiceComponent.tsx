@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import data from './../Data.json';
 import { BasicContext } from '../providers/BasicProvider';
-import ModalWindowCustomSettings from './ModalWindowCustomSettings';
+import ModalWindowCustomSettings from './CustomSettings';
 import { PlayingContext } from '../providers/PlayingProvider';
 
 const ChoiceComponent = ({
@@ -10,7 +10,7 @@ const ChoiceComponent = ({
   handleButtonClick = () => {},
 }) => {
   const { jmenohrace } = useContext(BasicContext);
-  const {setMode, setTime, setTypingText, typingText, time, mode} = useContext(PlayingContext);
+  const {setMode, setTime, setTypingText, typingText, time} = useContext(PlayingContext);
 
   const handleSelectChangeText = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedMode = event.target.value;
@@ -55,17 +55,17 @@ const ChoiceComponent = ({
                 </option>
               ))}
             </select>
-            <select className='selectOption' onChange={handleSelectChangeMode} value={mode}>
+            <select className='selectOption' onChange={handleSelectChangeMode}>
               {data.ModePlay.map((option, index) => (
                 <option key={index} value={option.mode}>
                   {option.mode}
                 </option>
               ))}
             </select>
-            <button onClick={customSettingButtonClick}>CustomSettings</button>
+            <button onClick={customSettingButtonClick}>Vlastní nastavení</button>
             </div>
             }
-            <button onClick={handleButtonClick}>Start Countdown</button>
+            <button onClick={handleButtonClick}>Start</button>
       
     </div>
   );

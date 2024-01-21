@@ -14,6 +14,8 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult}) => {
   const [numberMistakesSpaces, setNumberMistakesSpaces] = useState<number>(0);
   const [startTime, setStartTime] = useState<number>(0);
   const [timeToWrite, setTimeToWrite] = useState<number>(time);
+  const [indexTyping, setIndexTyping] = useState<number>(0);
+  const [lastIndex, setLastIndex] = useState<number>(0);
 
     // Ref který slouží na to, že člověk může okamžitě psát bez nutnosti na to kliknout. 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,6 +35,7 @@ const originalWordsCount = typingText.split(/\s+/).filter(word => word !== '').l
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   if (inputRef.current) {
     const value = event.target.value;
+    setIndexTyping(value.split(/\s+/).length - 1)
 
     if (typedWordsCount === originalWordsCount || value.length  === typingText.length) {
       const lastWord = value.trim().split(' ').pop();
@@ -51,6 +54,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   }
     
     if (value.lastIndexOf(" ")){
+      setLastIndex(value.length)
 
       // Získání zbývajícího textu k napsání
       const remainingText = typingText.slice(value.length);
@@ -64,6 +68,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNumberMistakesSpaces((prevmistakes) => prevmistakes + nextWord.length)
       }
     else {
+      setLastIndex(value.length)
       setTypedText(value);
       // Počítání chyb - připočítat 1 za každý nesprávně napsaný znak
       let currentMistakes = 0;
@@ -72,26 +77,31 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           currentMistakes++;
         }
       }
-      setNumberMistakes(currentMistakes + numberMistakesSpaces);
-    }}}
-  switch (mode) {
-    case "fastlook":
-      if (typedText.length === 1) {
-        setTimeToWrite(1);
-      }
-      break;
-
-      case "onemistake":
-        if (numberMistakes > 0) {
+      if (mode == "onemistake"){
+        if (currentMistakes === 1){
           handleButtonResult(numberMistakes, 0, 0);
-          return;
         }
-        break;
-  }
-
+      }
+      setNumberMistakes(currentMistakes + numberMistakesSpaces);
+      
+    }}}
 };
 
-      
+const renderModeSpecificContent = () => {
+  switch (mode) {
+    case 'classic':
+      break;
+    case 'onemistake':
+      break;
+    case 'fastlook':
+      const currentWordToWrite = typingText.split(" ")[indexTyping];
+      return <div className="current-word--towrite">{currentWordToWrite}</div>;
+    case 'bettertyping':
+      break;
+    default:
+      break;
+  }
+};
 
     useEffect(() => {
       if (startTime === 0) {
@@ -115,28 +125,51 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         }, [timeToWrite, setTimeToWrite ] );
       }
 
-      // to-do kde bych měl mít definovaný barvy v reactu.
       const renderTextWithHighlights = () => {
+      
         return typingText.split('').map((char, index) => {
-          if (typedText[index] === undefined) {
-            // Označit jako červené písmeno, pokud je skipped word
-            const isSkippedWord = index < typedText.length && typedText[index] !== char;
-            return <span style={{ color: isSkippedWord ? 'red' : 'var(--textcolornormal);' }}>{char}</span>;
+          if (index < lastIndex) {
+            if (char === typedText[index]) {
+              return (
+                <span style={{ color: '#efeffb' }}>
+                  {char}
+                </span>
+              );
+            } else {
+              return (
+                <span style={{color: 'red'}}>
+                  {char}
+                </span>
+              );
+            }
+          } else if (typedText[index] === undefined) {
+            return (
+              <span>
+                {char}
+              </span>
+            );
           } else if (typedText[index] === char) {
-            return <span style={{ color: '#efeffb' }}>{char}</span>;
-          } else {
-            return <span style={{ backgroundColor: 'red' }}>{char}</span>;
+            return (
+              <span style={{ backgroundColor: 'red' }}>
+                {char}
+              </span>
+            );
           }
         });
       };
+      
       return (
+      <div>
         <div>
-          {timeToWrite !== 0 && <div className='timetowrite'>{timeToWrite}</div>}
-        <input className='wordsInputs' ref={inputRef} type="text" value={typedText} onChange={handleInputChange} autoFocus />
-        <p>Mistakes: {numberMistakes}</p>
-        <div className='container__texttowrite'>
-        <p className='texttowrite'>{renderTextWithHighlights()}</p>
-        </div>
+      {timeToWrite !== 0 && <div className="timetowrite">{timeToWrite}</div>}
+      <input className="wordsInputs" ref={inputRef} type="text" value={typedText} onChange={handleInputChange} autoFocus />
+      <p>Mistakes: {numberMistakes}</p>
+      <div className="container__texttowrite">
+      <p className="texttowrite">
+        {mode === "normal" ? renderTextWithHighlights() : renderModeSpecificContent()}
+      </p>
+      </div>
+    </div>
       </div>
       );  
  }
