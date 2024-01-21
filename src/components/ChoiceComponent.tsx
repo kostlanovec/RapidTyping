@@ -10,7 +10,7 @@ const ChoiceComponent = ({
   handleButtonClick = () => {},
 }) => {
   const { jmenohrace } = useContext(BasicContext);
-  const {setMode, setTime, setTypingText} = useContext(PlayingContext);
+  const {setMode, setTime, setTypingText, typingText, time, mode} = useContext(PlayingContext);
 
   const handleSelectChangeText = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedMode = event.target.value;
@@ -41,21 +41,21 @@ const ChoiceComponent = ({
             {!customSettings &&
             <div>
             <h1>Vítej {jmenohrace} v aplikaci Rapid Typing</h1>
-            <select className='selectOption' onChange={handleSelectChangeText}>
+            <select className='selectOption' onChange={handleSelectChangeText} value={typingText}>
               {data.TextToTyping.map((option, index) => (
                 <option key={index} value={option.mode}>
                   {option.mode}
                 </option>
               ))}
             </select>
-            <select className='selectOption' onChange={handleSelectChangeTime}>
+            <select className='selectOption' onChange={handleSelectChangeTime} value={time}>
               {data.ModeTimeTyping.map((option, index) => (
                 <option key={index} value={option.time}>
                   {option.time}
                 </option>
               ))}
             </select>
-            <select className='selectOption' onChange={handleSelectChangeMode}>
+            <select className='selectOption' onChange={handleSelectChangeMode} value={mode}>
               {data.ModePlay.map((option, index) => (
                 <option key={index} value={option.mode}>
                   {option.mode}

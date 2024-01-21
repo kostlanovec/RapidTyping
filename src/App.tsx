@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import Countdown from './components/Countdown';
 import Typing from './components/Typing';
 import Result from './components/Result';
@@ -13,11 +13,10 @@ function App() {
   const [result, setResult] = useState<boolean>(false);
   const [gameStart, setGameStart] = useState<boolean>(false);
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
-  const [text, setText] = useState<string>("test");
+  const [text] = useState<string>("test");
   const {
     time,
     setTime,
-    setMode,
     setNumberMistakes,
     setTypingSpeed,
     mode,
@@ -77,7 +76,6 @@ function App() {
     toMainMenu={toMainMenu}
   />
 )}
-
         </div>
       )}
       

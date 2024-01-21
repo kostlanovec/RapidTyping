@@ -35,8 +35,8 @@ type PlayingContext = {
     const [typingSpeed, setTypingSpeed] = useState<number>(0);
     const [numberMistakes, setNumberMistakes] = useState<number>(0);
     const [time, setTime] = useState<number>(0);
-    const [mode, setMode] = useState<string>("");
-    const [typingText, setTypingText] = useState<string>("");
+    const [mode, setMode] = useState<string>("test");
+    const [typingText, setTypingText] = useState<string>("Vítej v aplikaci rapid Racing je to aplikace, ve které se snažím zlepšit můj skill skrz react");
     const [timeResult, setTimeResult] = useState<number>(0);
   
   

@@ -10,8 +10,6 @@ type TypingProps = {
 
 const Typing: React.FC<TypingProps> = ({ handleButtonResult}) => {
   const { numberMistakes, setNumberMistakes, setTypingSpeed, setTimeResult, typingText, time, mode } = useContext(PlayingContext);
-
-
   const [typedText, setTypedText] = useState<string>('');
   const [numberMistakesSpaces, setNumberMistakesSpaces] = useState<number>(0);
   const [startTime, setStartTime] = useState<number>(0);
@@ -43,8 +41,6 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       
       if (lastWordCharacterCount === lastWordrequired?.length || value.length  === typingText.length) {
         const currentTime = Date.now();
-        console.log(startTime);
-        console.log(currentTime);
         setTimeResult((currentTime - startTime)/10);
         handleButtonResult(
           numberMistakes,
@@ -60,7 +56,6 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const remainingText = typingText.slice(value.length);
       const nextSpaceIndex = remainingText.indexOf(' ');
 
-      //
       if (nextSpaceIndex !== -1 && value.lastIndexOf(' ') === value.length - 1 && nextSpaceIndex !== -1 && typingText[value.length - 1] !==  " ") {
         const nextWord = remainingText.slice(0, nextSpaceIndex);
         setTypedText(value + nextWord + " ");
