@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import BasicProvider from './providers/BasicProvider.tsx'
-import StatisticProvider from './providers/StatisticProvider.tsx'
+import StatisticProvider from './providers/PlayingProvider.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

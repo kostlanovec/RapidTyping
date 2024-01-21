@@ -5,7 +5,7 @@ import Result from './components/Result';
 import { BasicComponent } from './components/BasicComponent';
 import { BasicContext } from './providers/BasicProvider';
 import ChoiceComponent from './components/ChoiceComponent';
-import StatisticProvider, { StatisticContext } from './providers/StatisticProvider';
+import PlayingProvider, { PlayingContext } from './providers/PlayingProvider';
 
 function App() {
   const { jmenohrace } = useContext(BasicContext);
@@ -21,7 +21,7 @@ function App() {
     setNumberMistakes,
     setTypingSpeed,
     mode,
-  } = useContext(StatisticContext);
+  } = useContext(PlayingContext);
 
   const handleButtonClick = () =>{
     setShowCountdown(true);
@@ -55,22 +55,9 @@ function App() {
     }
   }
 
-  const handleSelectChangeText = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedMode = event.target.value;
-    setText(selectedMode);
-  };
-
-  const handleSelectChangeTime = (event: React.ChangeEvent<HTMLSelectElement>) =>{
-    const selectedTime = Number(event.target.value);
-    setTime(selectedTime);
-  }
-
-  const handleSelectChangeMode = (event: React.ChangeEvent<HTMLSelectElement>) =>{
-    const selectedTime = event.target.value;
-    setMode(selectedTime);
-  }
 
   return (
+    <PlayingProvider>
     <div>
       {!jmenohrace && <BasicComponent />}
   
@@ -78,9 +65,6 @@ function App() {
         <div>
           {!showCountdown && !gameStart && (
             <ChoiceComponent
-              handleSelectChangeText={handleSelectChangeText}
-              handleSelectChangeTime={handleSelectChangeTime}
-              handleSelectChangeMode={handleSelectChangeMode}
               customSettings={customSettings}
               customSettingButtonClick={customSettingButtonClick}
               handleButtonClick={handleButtonClick}
@@ -96,7 +80,9 @@ function App() {
 
         </div>
       )}
+      
     </div>
+    </PlayingProvider>
   );
 }
 

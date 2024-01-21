@@ -1,61 +1,65 @@
 import { createContext, useState } from "react";
 
-type StatisticContext = {
-    jmenohrace: string;
+type PlayingContext = {
     typingSpeed: number;
     numberMistakes: number;
     time: number;
     mode:string;
-    toggleJmeno: (jmeno: string) => void;
+    typingText: string,
+    timeResult: number;
     setTypingSpeed: React.Dispatch<React.SetStateAction<number>>;
     setNumberMistakes: React.Dispatch<React.SetStateAction<number>>;
     setTime: React.Dispatch<React.SetStateAction<number>>;
     setMode: React.Dispatch<React.SetStateAction<string>>;
+    setTypingText: React.Dispatch<React.SetStateAction<string>>;
+    setTimeResult: React.Dispatch<React.SetStateAction<number>>;
     
   };
   
-  export const StatisticContext = createContext<StatisticContext>({
-    jmenohrace: "",
+  export const PlayingContext = createContext<PlayingContext>({
     typingSpeed: 0,
     numberMistakes: 0,
     time: 0,
     mode:"",
-    toggleJmeno() {},
+    typingText: "",
+    timeResult: 0,
     setTypingSpeed() {},
     setNumberMistakes() {},
     setTime() {},
     setMode() {},
+    setTypingText() {},
+    setTimeResult() {},
   });
   
-  export const StatisticProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-    const [jmenohrace, setJmenoHrace] = useState<string>("");
+  export const PlayingProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [typingSpeed, setTypingSpeed] = useState<number>(0);
     const [numberMistakes, setNumberMistakes] = useState<number>(0);
     const [time, setTime] = useState<number>(0);
     const [mode, setMode] = useState<string>("");
+    const [typingText, setTypingText] = useState<string>("");
+    const [timeResult, setTimeResult] = useState<number>(0);
   
-    const toggleJmeno = (jmeno: string) => {
-      setJmenoHrace(jmeno);
-    };
   
     return (
-      <StatisticContext.Provider
+      <PlayingContext.Provider
         value={{
-          jmenohrace,
           typingSpeed,
           numberMistakes,
           time,
-            mode,
-          toggleJmeno,
+          mode,
+          typingText,
+          timeResult,
           setTypingSpeed,
           setNumberMistakes,
           setTime,
-            setMode,
+          setMode,
+          setTypingText,
+          setTimeResult,
         }}
       >
         {children}
-      </StatisticContext.Provider>
+      </PlayingContext.Provider>
     );
   };
 
-export default StatisticProvider;
+export default PlayingProvider;

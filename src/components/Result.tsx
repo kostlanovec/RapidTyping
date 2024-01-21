@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StatisticContext } from '../providers/StatisticProvider';
+import { PlayingContext } from '../providers/PlayingProvider';
 
 
 export type ResultsProps = {
@@ -7,7 +7,7 @@ export type ResultsProps = {
 };
 
 const Result: React.FC<ResultsProps> = ({ toMainMenu }) => {
-  const { typingSpeed, numberMistakes, time } = useContext(StatisticContext);
+  const { typingSpeed, numberMistakes, time, timeResult } = useContext(PlayingContext);
   console.log(time);
   return (
     <div>
@@ -15,7 +15,7 @@ const Result: React.FC<ResultsProps> = ({ toMainMenu }) => {
       <p>{typingSpeed} počet znaků za minutu</p>
       <p>{typingSpeed / 5} počet slov za minutu</p>
       <p>{numberMistakes} počet chyb</p>
-      <p>{time} čas v milisekundách</p>
+      <p>{timeResult} čas v milisekundách</p>
       <button onClick={toMainMenu}>Hlavní menu</button>
     </div>
   );

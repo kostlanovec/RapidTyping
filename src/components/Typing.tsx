@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useRef, useReducer, useContext} from 'react'
-import data from '../Data.json'
-import { StatisticContext } from '../providers/StatisticProvider';
+import React, {useState, useEffect, useRef, useContext} from 'react'
+import { PlayingContext } from '../providers/PlayingProvider';
 
 type TypingProps = {
   handleButtonResult: (mistakes: number, speed: number, time: number) => void;
@@ -9,40 +8,9 @@ type TypingProps = {
   mode:string;
 };
 
-type Action =
-  {type:"normal";} |
-  {type: "fastlook"} |
-  {type: "onemistake"} |
-  {type: "bettertyping"}
+const Typing: React.FC<TypingProps> = ({ handleButtonResult}) => {
+  const { numberMistakes, setNumberMistakes, setTypingSpeed, setTimeResult, typingText, time, mode } = useContext(PlayingContext);
 
-function reducer(state:string, action:Action){
-  switch (action.type) {
-    case "normal":{
-      return{
-      };
-    }
-    case "fastlook":{
-      return{
-
-      };
-    }
-    case "onemistake":{
-      return{
-      };
-    }
-      case "bettertyping":{
-        return{
-
-        }
-    }
-}
-}
-
-const Typing: React.FC<TypingProps> = ({ handleButtonResult, text}) => {
-  const textToTyp = data.TextToTyping.find((option) => option.mode === text)?.text || '';
-  const { numberMistakes, setNumberMistakes, setTypingSpeed, time, mode,  setTime } = useContext(StatisticContext);
-
-  /*const [state,  dispatch] = useReducer(reducer, mode);*/
 
   const [typedText, setTypedText] = useState<string>('');
   const [numberMistakesSpaces, setNumberMistakesSpaces] = useState<number>(0);
@@ -54,7 +22,7 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult, text}) => {
   const typedWordsCount = typedText.split(/\s+/).filter(word => word !== '').length;
 
 // Spočítat počet slov v původním textu
-const originalWordsCount = textToTyp.split(/\s+/).filter(word => word !== '').length;
+const originalWordsCount = typingText.split(/\s+/).filter(word => word !== '').length;
 
     const calculateTypingSpeed = (endTime: number, startTime: number, textLength: number) => {
       const timeInMinutes = (endTime - startTime) / 60000;
@@ -63,58 +31,69 @@ const originalWordsCount = textToTyp.split(/\s+/).filter(word => word !== '').le
       return charactersPerMinute;
     };
 
-    // Porovnat počty slov
-if (typedWordsCount === originalWordsCount) {
-  const currentTime = Date.now();
-  setTime(startTime - currentTime);
-  handleButtonResult(
-    numberMistakes,
-    calculateTypingSpeed(currentTime, startTime, textToTyp.length),
-    currentTime - startTime
-  );
-}
 
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   if (inputRef.current) {
-    let numberOfCharacters = 0;
     const value = event.target.value;
-    console.log(value);
-    const lastChar = value[value.length - 1];
-    console.log(lastChar);
 
-    // Zkontrolujte, zda je poslední znak mezerou a zda se vstupní text liší od očekávaného textu
-    if (/\s/.test(lastChar) && value.trim() !== textToTyp.slice(0, value.length - 1).trim()) {
+    if (typedWordsCount === originalWordsCount || value.length  === typingText.length) {
+      const lastWord = value.trim().split(' ').pop();
+      const lastWordCharacterCount = lastWord ? lastWord.length : 0;
+      const lastWordrequired = typingText.trim().split(" ").pop();
+      
+      if (lastWordCharacterCount === lastWordrequired?.length || value.length  === typingText.length) {
+        const currentTime = Date.now();
+        console.log(startTime);
+        console.log(currentTime);
+        setTimeResult((currentTime - startTime)/10);
+        handleButtonResult(
+          numberMistakes,
+          calculateTypingSpeed(currentTime, startTime, typingText.length),
+          currentTime - startTime
+        );
+    }
+  }
+    
+    if (value.lastIndexOf(" ")){
 
       // Získání zbývajícího textu k napsání
-      const remainingText = textToTyp.slice(value.length);
+      const remainingText = typingText.slice(value.length);
       const nextSpaceIndex = remainingText.indexOf(' ');
 
-      /*const nextCharAfterInput = textToTyp[value.length];*/
-      if (nextSpaceIndex !== -1 && /*nextCharAfterInput === ' ' && */value.lastIndexOf(' ') === value.length - 1) {
+      //
+      if (nextSpaceIndex !== -1 && value.lastIndexOf(' ') === value.length - 1 && nextSpaceIndex !== -1 && typingText[value.length - 1] !==  " ") {
         const nextWord = remainingText.slice(0, nextSpaceIndex);
-        numberOfCharacters = nextWord.length;
-
-        console.log(`Skipped word: ${nextWord}`);
-
-        setTypedText(value + nextWord + ' ');
-        inputRef.current.setSelectionRange(value.length + nextWord.length + 1, value.length + nextWord.length + 1);
-
+        setTypedText(value + nextWord + " ");
+        inputRef.current.setSelectionRange(value.length + nextWord.length + 1, value.length + nextWord.length);
         // Připočítání znaků nextWord jako chyby
         setNumberMistakesSpaces((prevmistakes) => prevmistakes + nextWord.length)
       }
-    } else {
+    else {
       setTypedText(value);
-
       // Počítání chyb - připočítat 1 za každý nesprávně napsaný znak
       let currentMistakes = 0;
       for (let i = 0; i < value.length; i++) {
-        if (textToTyp[i] !== value[i]) {
+        if (typingText[i] !== value[i]) {
           currentMistakes++;
         }
       }
       setNumberMistakes(currentMistakes + numberMistakesSpaces);
-    }
+    }}}
+  switch (mode) {
+    case "fastlook":
+      if (typedText.length === 1) {
+        setTimeToWrite(1);
+      }
+      break;
+
+      case "onemistake":
+        if (numberMistakes > 0) {
+          handleButtonResult(numberMistakes, 0, 0);
+          return;
+        }
+        break;
   }
+
 };
 
       
@@ -135,7 +114,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           if(timeToWrite === 0)
           {   // odpočet skončil, takže je konec
             const currentTime = Date.now();
-            handleButtonResult(numberMistakes,calculateTypingSpeed(currentTime, startTime, textToTyp.length),currentTime - startTime
+            handleButtonResult(numberMistakes,calculateTypingSpeed(currentTime, startTime, typingText.length),currentTime - startTime
             );
           }
         }, [timeToWrite, setTimeToWrite ] );
@@ -143,7 +122,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
       // to-do kde bych měl mít definovaný barvy v reactu.
       const renderTextWithHighlights = () => {
-        return textToTyp.split('').map((char, index) => {
+        return typingText.split('').map((char, index) => {
           if (typedText[index] === undefined) {
             // Označit jako červené písmeno, pokud je skipped word
             const isSkippedWord = index < typedText.length && typedText[index] !== char;
