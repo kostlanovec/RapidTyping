@@ -9,9 +9,13 @@ body{
   background-color: var(--backgroundcolor);
   color: var(--textcolornormal);
   padding: 0;
-  margin: 1em;
+  margin: 0;
   font-family: "Roboto", sans-serif;
   user-select: none;
+}
+
+h1{
+  text-align:center;
 }
   
 .texttowrite{
@@ -39,9 +43,13 @@ body{
 
 .selectOption{
   background-color: #0D253D;
-  border: none;
   color: var(--yellow);
   text-decoration: none;
+  min-width: 200px;
+  padding: 1em;
+  border-radius: 1em;
+  margin: 0.5em;
+  border: 2px solid white;
 }
 
 .timetowrite{
@@ -79,4 +87,63 @@ body{
     align-items: center;
     font-size: 2em;
     color: red;
+  }
+
+  .inputWindow{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* flex centr all*/
+  .inputWindow__header{
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .form__input{
+    width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    border: none;
+    border-radius: 0.5em;
+    outline: none;
+  }
+
+  .inputWindow__label{
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  .button{
+    padding: 0.5em;
+    width: 10em;
+    border: none;
+    border-radius: 0.5em;
+    outline: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .inputWindow__div{
+    width: 20em;
+    text-align: center;
+  }
+
+  .choice{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button--space{
+    margin:  auto;
+    margin-top: 2em;
   }

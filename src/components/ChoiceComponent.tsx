@@ -9,7 +9,7 @@ const ChoiceComponent = ({
   customSettingButtonClick = () => {},
   handleButtonClick = () => {},
 }) => {
-  const { jmenohrace } = useContext(BasicContext);
+  const { jmenoHracePatyPad } = useContext(BasicContext);
   const {setMode, setTime, setTypingText, typingText, time} = useContext(PlayingContext);
 
   const handleSelectChangeText = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,15 +32,15 @@ const ChoiceComponent = ({
     setMode(selectedTime);
   }
   return (
-    <div>
+    <div className='choice'>
             {customSettings && (
         <ModalWindowCustomSettings
           onCustomSettingsEnd={customSettingButtonClick}
         />
       )}
             {!customSettings &&
-            <div>
-            <h1>Vítej {jmenohrace} v aplikaci Rapid Typing</h1>
+            <>
+            <h1>Vítej {jmenoHracePatyPad} v aplikaci Rapid Typing</h1>
             <select className='selectOption' onChange={handleSelectChangeText} value={typingText}>
               {data.TextToTyping.map((option, index) => (
                 <option key={index} value={option.mode}>
@@ -62,10 +62,10 @@ const ChoiceComponent = ({
                 </option>
               ))}
             </select>
-            <button onClick={customSettingButtonClick}>Vlastní nastavení</button>
-            </div>
+            <button className={`${['button']}`} onClick={customSettingButtonClick}>Vlastní nastavení</button>
+            </>
             }
-            <button onClick={handleButtonClick}>Start</button>
+            <button onClick={handleButtonClick} className={`${['button button--space']}`}>Start</button>
       
     </div>
   );

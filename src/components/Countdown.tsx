@@ -7,7 +7,7 @@ type CountDownProps = {
 
 const CountDown: React.FC<CountDownProps> = ({onCountdownEnd}) =>{
     // Tady jsme si definovali, že základní parametr je 3
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(3);
 
     useEffect(() => {
         if(count > 0)

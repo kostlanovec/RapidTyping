@@ -95,7 +95,7 @@ const renderModeSpecificContent = () => {
       break;
     case 'fastlook':
       const currentWordToWrite = typingText.split(" ")[indexTyping];
-      return <div className="current-word--towrite">{currentWordToWrite}</div>;
+      return <div>{currentWordToWrite}</div>;
     case 'bettertyping':
       break;
     default:

@@ -8,12 +8,11 @@ import ChoiceComponent from './components/ChoiceComponent';
 import PlayingProvider, { PlayingContext } from './providers/PlayingProvider';
 
 function App() {
-  const { jmenohrace } = useContext(BasicContext);
+  const { jmenoHrace, jmenoHracePatyPad } = useContext(BasicContext);
   const [customSettings, setCustomSettings] = useState<boolean>(false);
   const [result, setResult] = useState<boolean>(false);
   const [gameStart, setGameStart] = useState<boolean>(false);
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
-  const [text] = useState<string>("test");
   const {
     time,
     setTime,
@@ -58,10 +57,10 @@ function App() {
   return (
     <PlayingProvider>
     <div>
-      {!jmenohrace && <BasicComponent />}
+      {!jmenoHrace && !jmenoHracePatyPad && <BasicComponent />}
   
-      {jmenohrace && (
-        <div>
+      {jmenoHrace && jmenoHracePatyPad && (
+        <>
           {!showCountdown && !gameStart && (
             <ChoiceComponent
               customSettings={customSettings}
@@ -70,13 +69,13 @@ function App() {
             />
           )}
           {showCountdown && <Countdown onCountdownEnd={handleButtondownEnd} />}
-          {gameStart && !result && <Typing handleButtonResult={handleButtonResult} text={text} time={time} mode={mode} />}
+          {gameStart && !result && <Typing handleButtonResult={handleButtonResult} time={time} mode={mode} text={""}/>}
           {result && (
   <Result
     toMainMenu={toMainMenu}
   />
 )}
-        </div>
+        </>
       )}
       
     </div>
