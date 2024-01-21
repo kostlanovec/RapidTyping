@@ -16,6 +16,7 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult}) => {
   const [timeToWrite, setTimeToWrite] = useState<number>(time);
   const [indexTyping, setIndexTyping] = useState<number>(0);
   const [lastIndex, setLastIndex] = useState<number>(0);
+  const [writeText, setWriteText] = useState<string>("");
 
     // Ref který slouží na to, že člověk může okamžitě psát bez nutnosti na to kliknout. 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,6 +36,7 @@ const originalWordsCount = typingText.split(/\s+/).filter(word => word !== '').l
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   if (inputRef.current) {
     const value = event.target.value;
+    setWriteText(value);
     setIndexTyping(value.split(/\s+/).length - 1)
 
     if (typedWordsCount === originalWordsCount || value.length  === typingText.length) {
@@ -47,7 +49,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTimeResult((currentTime - startTime)/10);
         handleButtonResult(
           numberMistakes,
-          calculateTypingSpeed(currentTime, startTime, typingText.length),
+          calculateTypingSpeed(currentTime, startTime, value.length),
           currentTime - startTime
         );
     }
@@ -119,7 +121,7 @@ const renderModeSpecificContent = () => {
           if(timeToWrite === 0)
           {   // odpočet skončil, takže je konec
             const currentTime = Date.now();
-            handleButtonResult(numberMistakes,calculateTypingSpeed(currentTime, startTime, typingText.length),currentTime - startTime
+            handleButtonResult(numberMistakes,calculateTypingSpeed(currentTime, startTime, writeText.length),currentTime - startTime
             );
           }
         }, [timeToWrite, setTimeToWrite ] );

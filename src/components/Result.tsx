@@ -7,8 +7,7 @@ export type ResultsProps = {
 };
 
 const Result: React.FC<ResultsProps> = ({ toMainMenu }) => {
-  const { typingSpeed, numberMistakes, time, timeResult } = useContext(PlayingContext);
-  console.log(time);
+  const { typingSpeed, numberMistakes, timeResult } = useContext(PlayingContext);
   return (
     <div>
       <h2>Tady máš výsledek</h2>
