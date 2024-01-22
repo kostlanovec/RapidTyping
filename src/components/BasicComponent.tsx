@@ -67,7 +67,7 @@ export const BasicComponent = () => {
           />
           Nepoužít stejné jméno jako v pátem pádě
         </label>
- <div>
+        <div>
         <button className={`${['button']}`} onClick={ButtonAction}>
         Poslat
       </button>
