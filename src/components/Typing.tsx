@@ -91,10 +91,6 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
 const renderModeSpecificContent = () => {
   switch (mode) {
-    case 'classic':
-      break;
-    case 'onemistake':
-      break;
     case 'fastlook':
       const currentWordToWrite = typingText.split(" ")[indexTyping];
       return <div>{currentWordToWrite}</div>;
@@ -168,7 +164,7 @@ const renderModeSpecificContent = () => {
       <p>Mistakes: {numberMistakes}</p>
       <div className="container__texttowrite">
       <p className="texttowrite">
-        {mode === "normal" ? renderTextWithHighlights() : renderModeSpecificContent()}
+        {mode === "normal" || "onemistake" ? renderTextWithHighlights() : renderModeSpecificContent()}
       </p>
       </div>
     </div>
