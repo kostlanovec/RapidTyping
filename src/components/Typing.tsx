@@ -18,7 +18,7 @@ const Typing: React.FC<TypingProps> = ({ handleButtonResult}) => {
   const [lastIndex, setLastIndex] = useState<number>(0);
   const [writeText, setWriteText] = useState<string>("");
 
-    // Ref který slouží na to, že člověk může okamžitě psát bez nutnosti na to kliknout. 
+  // Ref který slouží na to, že člověk může okamžitě psát bez nutnosti na to kliknout. 
   const inputRef = useRef<HTMLInputElement>(null);
   const typedWordsCount = typedText.split(/\s+/).filter(word => word !== '').length;
 
@@ -37,7 +37,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   if (inputRef.current) {
     const value = event.target.value;
     setWriteText(value);
-    setIndexTyping(value.split(/\s+/).length - 1)
+    setIndexTyping(value.split(/\s+/).length - 1); 
 
     if (typedWordsCount === originalWordsCount || value.length  === typingText.length) {
       const lastWord = value.trim().split(' ').pop();
@@ -56,7 +56,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   }
     
     if (value.lastIndexOf(" ")){
-      setLastIndex(value.length)
+      setLastIndex(value.length);
 
       // Získání zbývajícího textu k napsání
       const remainingText = typingText.slice(value.length);
@@ -156,8 +156,7 @@ const renderModeSpecificContent = () => {
         });
       };
       
-      return (
-      <div>
+    return (
         <div>
       {timeToWrite !== 0 && <div className="timetowrite">{timeToWrite}</div>}
       <input className="wordsInputs" ref={inputRef} type="text" value={typedText} onChange={handleInputChange} autoFocus />
@@ -168,8 +167,7 @@ const renderModeSpecificContent = () => {
       </p>
       </div>
     </div>
-      </div>
-      );  
+        );  
  }
 
 export default Typing;
