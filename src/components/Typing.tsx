@@ -1,15 +1,10 @@
 import React, {useState, useEffect, useRef, useContext} from 'react'
 import { PlayingContext } from '../providers/PlayingProvider';
+import {TypingProps} from "../types/type";
 
-type TypingProps = {
-  handleButtonResult: (mistakes: number, speed: number, time: number) => void;
-  text:string;
-  time:number;
-  mode:string;
-};
 
 const Typing: React.FC<TypingProps> = ({ handleButtonResult}) => {
-  const { numberMistakes, setNumberMistakes, setTypingSpeed, setTimeResult, typingText, time, mode } = useContext(PlayingContext);
+  const [{time, numberMistakes, typingText, mode  }, dispatch] = useContext(PlayingContext);
   const [typedText, setTypedText] = useState<string>('');
   const [numberMistakesSpaces, setNumberMistakesSpaces] = useState<number>(0);
   const [startTime, setStartTime] = useState<number>(0);
@@ -28,7 +23,8 @@ const originalWordsCount = typingText.split(/\s+/).filter(word => word !== '').l
     const calculateTypingSpeed = (endTime: number, startTime: number, textLength: number) => {
       const timeInMinutes = (endTime - startTime) / 60000;
       const charactersPerMinute = textLength / timeInMinutes;
-      setTypingSpeed(charactersPerMinute);
+      dispatch({type: 'SET_TYPING_SPEED', payload: charactersPerMinute});
+
       return charactersPerMinute;
     };
 
@@ -46,7 +42,8 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       
       if (lastWordCharacterCount === lastWordrequired?.length || value.length  === typingText.length) {
         const currentTime = Date.now();
-        setTimeResult((currentTime - startTime)/10);
+        dispatch({type: 'SET_TIME_RESULT', payload: (currentTime - startTime)/10});
+
         handleButtonResult(
           numberMistakes,
           calculateTypingSpeed(currentTime, startTime, value.length),
@@ -84,8 +81,8 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           handleButtonResult(numberMistakes, 0, 0);
         }
       }
-      setNumberMistakes(currentMistakes + numberMistakesSpaces);
-      
+
+      dispatch({type: 'SET_NUMBER_MISTAKES', payload: currentMistakes + numberMistakesSpaces});     
     }}}
 };
 

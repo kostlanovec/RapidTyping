@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import { PlayingContext } from '../providers/PlayingProvider';
+import { ResultsProps } from '../types/type';
 
-
-export type ResultsProps = {
-    toMainMenu: () => void;
-};
 
 const Result: React.FC<ResultsProps> = ({ toMainMenu }) => {
-  const { typingSpeed, numberMistakes, timeResult } = useContext(PlayingContext);
+  const [ {typingSpeed, numberMistakes, timeResult}  ] = useContext(PlayingContext);
   return (
     <div>
       <h2>Tady máš výsledek</h2>

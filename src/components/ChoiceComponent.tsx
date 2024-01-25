@@ -10,7 +10,7 @@ const ChoiceComponent = ({
   handleButtonClick = () => {},
 }) => {
   const { jmenoHracePatyPad } = useContext(BasicContext);
-  const { setMode, setTime, time, setTypingText } = useContext(PlayingContext);
+  const [{time}, dispatch ] = useContext(PlayingContext);
   const [selectedText, setSelectedText] = useState<string>();
 
   const handleSelectChangeText = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -19,17 +19,17 @@ const ChoiceComponent = ({
     
     const selectedTextObject = data.TextToTyping.find((option) => option.mode === selectedMode);
     
-    setTypingText(selectedTextObject?.text || '');
+    dispatch({type: 'SET_TYPING_TEXT', payload: selectedTextObject?.text || ''});
   };
 
   const handleSelectChangeTime = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTime = Number(event.target.value);
-    setTime(selectedTime);
+    dispatch({type: 'SET_TIME', payload: selectedTime});
   };
 
   const handleSelectChangeMode = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedMode = event.target.value;
-    setMode(selectedMode);
+    dispatch({type: 'SET_MODE', payload: selectedMode});
   };
 
   return (

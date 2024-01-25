@@ -13,13 +13,7 @@ function App() {
   const [result, setResult] = useState<boolean>(false);
   const [gameStart, setGameStart] = useState<boolean>(false);
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
-  const {
-    time,
-    setTime,
-    setNumberMistakes,
-    setTypingSpeed,
-    mode,
-  } = useContext(PlayingContext);
+  const [{time, mode}, dispatch] = useContext(PlayingContext);
 
   const handleButtonClick = () =>{
     setShowCountdown(true);
@@ -31,11 +25,10 @@ function App() {
     }
 
     const handleButtonResult = (mistakes: number, speed: number, timeTaken: number) => {
-      setNumberMistakes(mistakes);
-      setTypingSpeed(speed);
-      setTime(timeTaken);
       setResult(true);
-      setTime(0);
+      dispatch({type: 'SET_TIME', payload: timeTaken});
+      dispatch({type: 'SET_TYPING_SPEED', payload: speed});
+      dispatch({type: 'SET_NUMBER_MISTAKES', payload: mistakes});
     };
     
 

@@ -1,9 +1,5 @@
 import React, {useState, useEffect } from 'react'
-
-// Definujme si, že existuje nějaká funkce
-type CountDownProps = {
-    onCountdownEnd: () => void;
-};
+import { CountDownProps } from '../types/type';
 
 const CountDown: React.FC<CountDownProps> = ({onCountdownEnd}) =>{
     // Tady jsme si definovali, že základní parametr je 3

@@ -1,13 +1,10 @@
 import React, { useContext, useState} from 'react';
 import { PlayingContext } from '../providers/PlayingProvider';
 import data from "../Data.json"
-
-export type CustomSettingsProps = {
-  onCustomSettingsEnd: () => void;
-};
+import { CustomSettingsProps } from '../types/type';
 
 const CustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSettingsEnd}) => {
-    const {setMode, setTypingText, typingText, setTime, mode, time} = useContext(PlayingContext);
+    const [{typingText, mode, time}, dispatch ] = useContext(PlayingContext);
     const [randomTextLength, setRandomTextLength] = useState<number>(50);
 
   const handleBackMainMenu = () => {
@@ -15,7 +12,8 @@ const CustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSettingsEnd}) =
   };
 
   const handleSelectChangeMode = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMode(e.target.value);
+    const selectedMode = e.target.value;
+    dispatch({type: 'SET_MODE', payload: selectedMode});
   };
 
   const generateRandomText = (length: number): string => {
@@ -33,7 +31,7 @@ const CustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSettingsEnd}) =
 
   const handleGenerateRandomText = () => {
     const generatedText = generateRandomText(randomTextLength);
-    setTypingText(generatedText);
+    dispatch({type: 'SET_TYPING_TEXT', payload: generatedText});
   };
 
   return (
@@ -48,9 +46,10 @@ const CustomSettings: React.FC<CustomSettingsProps> = ({ onCustomSettingsEnd}) =
         ))}
       </select>
       <p>Čas</p>
-      <input type='number' value={time} onChange={(e) => setTime(Number(e.target.value))} />
+      <input type="number" value={time} onChange={(e) => dispatch({type: 'SET_TIME', payload: Number(e.target.value)})} />
+      
       <p>Text</p>
-      <textarea value={typingText} onChange={(e) => setTypingText(e.target.value)}></textarea>
+      <textarea value={typingText} onChange={(e) => dispatch({type: 'SET_TYPING_TEXT', payload: e.target.value})}></textarea>
       <p>Délka náhodného textu</p>
       <input
         type='number'
