@@ -8,7 +8,7 @@ import ChoiceComponent from './components/ChoiceComponent';
 import PlayingProvider, { PlayingContext } from './providers/PlayingProvider';
 
 function App() {
-  const { jmenoHrace, jmenoHracePatyPad } = useContext(BasicContext);
+  const {jmenoHrace, jmenoHracePatyPad } = useContext(BasicContext);
   const [customSettings, setCustomSettings] = useState<boolean>(false);
   const [result, setResult] = useState<boolean>(false);
   const [gameStart, setGameStart] = useState<boolean>(false);

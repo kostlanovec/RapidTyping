@@ -4,8 +4,8 @@ import { ResultsProps } from '../types/type';
 
 
 const Result: React.FC<ResultsProps> = ({ toMainMenu }) => {
-  const [ {typingSpeed, numberMistakes, timeResult, typingText, time}  ] = useContext(PlayingContext);
-  const netWordsPerMinute = Math.round((typingText.length - numberMistakes) / time * 60)
+  const [ {typingSpeed, numberMistakes, timeResult,time}  ] = useContext(PlayingContext);
+  const netWordsPerMinute = Math.round((typingSpeed - numberMistakes) / time * 60)
 
   return (
     <div>

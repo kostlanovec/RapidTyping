@@ -160,7 +160,7 @@ const renderModeSpecificContent = () => {
       <p>Mistakes: {numberMistakes}</p>
       <div className="container__texttowrite">
       <p className="texttowrite">
-        {mode === "normal" || "onemistake" ? renderTextWithHighlights() : renderModeSpecificContent()}
+        {mode === "normal" ? renderTextWithHighlights() : renderModeSpecificContent()}
       </p>
       </div>
     </div>
